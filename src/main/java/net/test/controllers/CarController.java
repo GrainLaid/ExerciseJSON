@@ -4,6 +4,7 @@ import net.test.entity.CarEntity;
 import net.test.exception.NotFoundException;
 import net.test.repositories.CarRepositories;
 import net.test.repositories.PersonRepositories;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,17 +13,16 @@ import java.util.List;
 
 @RestController
 public class CarController {
-
-    private CarRepositories carRepositories;
     @Autowired
-    public void setCarRepositories(CarRepositories carRepositories) {
-        this.carRepositories = carRepositories;
-    }
+    private CarRepositories carRepositories;
+
+
     private PersonRepositories personRepositories;
     @Autowired
     public void setPersonRepositories(PersonRepositories personRepositories) {
         this.personRepositories = personRepositories;
     }
+
     @GetMapping("/person/{personId}/car")
     public List<CarEntity> getContactByPersonId(@PathVariable Long personId) {
 
@@ -30,10 +30,10 @@ public class CarController {
             throw new NotFoundException("Person not found!");
         }
 
-        return carRepositories.findByPersonId(personId);
+        return carRepositories.findByPersonEntityId(personId);
     }
 
-    @PostMapping("/car/{studentId}")
+    @PostMapping("/car/{personId}")
     public CarEntity addCar(@PathVariable Long personId,
                                     @Valid @RequestBody CarEntity carEntity) {
         return personRepositories.findById(personId)
@@ -44,7 +44,7 @@ public class CarController {
     }
 
 
-    @DeleteMapping("/clear/{studentId}/{assignmentId}")
+    @DeleteMapping("/clear/{personId}/{carId}")
     public String deleteCar(@PathVariable Long personId,
                                    @PathVariable Long carId) {
 

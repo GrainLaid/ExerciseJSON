@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CarRepositories extends JpaRepository<CarEntity, Long> {
-    List<CarEntity> findByPersonId(Long personId);
+    List<CarEntity> findByPersonEntityId(Long personId);
 }

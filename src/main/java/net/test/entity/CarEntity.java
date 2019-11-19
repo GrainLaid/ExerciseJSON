@@ -1,14 +1,17 @@
 package net.test.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "CAR")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CarEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
     @Column(name = "ID_CAR")
     private Long id;
 
@@ -24,8 +27,9 @@ public class CarEntity {
     @NotNull
     private Long ownerid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "Person_Car", nullable = false)
+    @JsonIgnore
     private PersonEntity personEntity;
 
     public CarEntity() {

@@ -11,7 +11,6 @@ public class PersonEntity {
     @Id
     @Column(name = "ID_PERSON", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
     private Long id;
 
     @Column(name = "NAME", nullable = false)
@@ -23,7 +22,7 @@ public class PersonEntity {
     @NotNull
     private String birthday;
 
-    @OneToMany(mappedBy = "PERSONS", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "personEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CarEntity> carEntitiesList;
 
     public PersonEntity() {
