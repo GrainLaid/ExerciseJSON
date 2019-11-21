@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,16 +38,13 @@ public class PersonController {
     }
 
     @PostMapping("/person")
-    public PersonEntity createPerson(@Valid @RequestBody PersonEntity personEntity) throws ParseException {
+    public PersonEntity createPerson(@Valid @RequestBody PersonEntity personEntity) {
         return personRepositories.save(personEntity);
     }
 
-    @DeleteMapping("/clear/{id}")
-    public String deletePerson(@PathVariable Long id) {
-        return personRepositories.findById(id)
-                .map(personEntity -> {
-                    personRepositories.delete(personEntity);
-                    return "Delete!";
-                }).orElseThrow(() -> new NotFoundException("Student not found with id " + id));
+    @GetMapping("/clear")
+    public void deletePerson() {
+      personRepositories.deleteAll();
     }
+
 }
