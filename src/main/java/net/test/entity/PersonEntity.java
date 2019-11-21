@@ -21,13 +21,12 @@ public class PersonEntity {
 
     @Column(name = "NAME", nullable = false)
     @NotNull
-//    @Pattern(regexp = "[A-Z][a-z]*")
     @Size(min = 2, max = 30, message = "Именя не может быть меньше 2х знаков и не более 30")
     private String name;
 
     @Column(name = "BERTHDAY")
     @NotNull
-//    @Past
+    @Past
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd.MM.yyyy")
     private Date birthday;
 
