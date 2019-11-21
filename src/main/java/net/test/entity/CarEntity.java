@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "CAR")
@@ -21,6 +23,7 @@ public class CarEntity {
 
     @Column(name = "HORSEPOWER", nullable = false)
     @NotNull
+    @Min(1)
     private Integer horsepower;
 
     @Column(name = "OWNERID", nullable = false)

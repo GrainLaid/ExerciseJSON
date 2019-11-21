@@ -1,8 +1,13 @@
 package net.test.entity;
 
+import net.test.valid.DateValid;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,12 +20,14 @@ public class PersonEntity {
 
     @Column(name = "NAME", nullable = false)
     @NotNull
+//    @Pattern(regexp = "[A-Z][a-z]*")
     @Size(min = 2, max = 30, message = "Именя не может быть меньше 2х знаков и не более 30")
     private String name;
 
     @Column(name = "BERTHDAY")
     @NotNull
-    private String birthday;
+//    @Past
+    private Date birthday;
 
     @OneToMany(mappedBy = "personEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CarEntity> carEntitiesList;
@@ -28,7 +35,7 @@ public class PersonEntity {
     public PersonEntity() {
     }
 
-    public PersonEntity(String name, String birthday) {
+    public PersonEntity(String name, Date birthday) {
         this.name = name;
         this.birthday = birthday;
     }
@@ -49,11 +56,11 @@ public class PersonEntity {
         this.name = name;
     }
 
-    public String getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 

@@ -18,6 +18,7 @@ public class CarController {
 
 
     private PersonRepositories personRepositories;
+
     @Autowired
     public void setPersonRepositories(PersonRepositories personRepositories) {
         this.personRepositories = personRepositories;
@@ -26,7 +27,7 @@ public class CarController {
     @GetMapping("/person/{personId}/car")
     public List<CarEntity> getContactByPersonId(@PathVariable Long personId) {
 
-        if(!personRepositories.existsById(personId)) {
+        if (!personRepositories.existsById(personId)) {
             throw new NotFoundException("Person not found!");
         }
 
@@ -35,27 +36,11 @@ public class CarController {
 
     @PostMapping("/car/{personId}")
     public CarEntity addCar(@PathVariable Long personId,
-                                    @Valid @RequestBody CarEntity carEntity) {
+                            @Valid @RequestBody CarEntity carEntity) {
         return personRepositories.findById(personId)
                 .map(personEntity -> {
                     carEntity.setPersonEntity(personEntity);
                     return carRepositories.save(carEntity);
-                }).orElseThrow(() -> new NotFoundException("Person not found!"));
-    }
-
-
-    @DeleteMapping("/clear/{personId}/{carId}")
-    public String deleteCar(@PathVariable Long personId,
-                                   @PathVariable Long carId) {
-
-        if(!personRepositories.existsById(personId)) {
-            throw new NotFoundException("Person not found!");
-        }
-
-        return carRepositories.findById(carId)
-                .map(carEntity -> {
-                    carRepositories.delete(carEntity);
-                    return "Deleted!";
                 }).orElseThrow(() -> new NotFoundException("Person not found!"));
     }
 }
