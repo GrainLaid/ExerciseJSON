@@ -1,6 +1,7 @@
 package net.test.entity;
 
-import net.test.valid.DateValid;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -27,6 +28,7 @@ public class PersonEntity {
     @Column(name = "BERTHDAY")
     @NotNull
 //    @Past
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd.MM.yyyy")
     private Date birthday;
 
     @OneToMany(mappedBy = "personEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

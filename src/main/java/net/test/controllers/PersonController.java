@@ -1,19 +1,15 @@
 package net.test.controllers;
 
-import net.test.dto.PersonDto;
+
 import net.test.entity.PersonEntity;
 import net.test.exception.NotFoundException;
 import net.test.repositories.PersonRepositories;
-import net.test.util.DTO;
-import net.test.valid.DateValid;
-import org.modelmapper.ModelMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +39,7 @@ public class PersonController {
     }
 
     @PostMapping("/person")
-    public PersonEntity createPerson(@DTO(PersonDto.class)@Valid @RequestBody PersonEntity personEntity) throws ParseException {
+    public PersonEntity createPerson(@Valid @RequestBody PersonEntity personEntity) throws ParseException {
         return personRepositories.save(personEntity);
     }
 
