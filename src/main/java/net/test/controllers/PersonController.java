@@ -26,8 +26,6 @@ public class PersonController {
     public void setPersonRepositories(PersonRepositories personRepositories) {
         this.personRepositories = personRepositories;
     }
-    @Autowired
-    private DateValid dateValid;
 
     @GetMapping("/person")
     public List<PersonEntity> getAllPerson() {
