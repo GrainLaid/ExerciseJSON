@@ -1,50 +1,81 @@
 package net.test.controllers;
 
 
-import net.test.entity.PersonEntity;
-import net.test.exception.NotFoundException;
-import net.test.repositories.PersonRepositories;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import net.test.DTO.PersonDTO;
+import net.test.DTO.PersonWithCars;
+import net.test.DTO.Statistics;
 
+import net.test.service.ServiceEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
-@RestController
+
+@Controller
 public class PersonController {
 
-    private PersonRepositories personRepositories;
+    private ServiceEntity serviceEntity;
 
     @Autowired
-    public void setPersonRepositories(PersonRepositories personRepositories) {
-        this.personRepositories = personRepositories;
+    public void setServiceEntity(ServiceEntity serviceEntity) {
+        this.serviceEntity = serviceEntity;
     }
 
-    @GetMapping("/person")
-    public List<PersonEntity> getAllPerson() {
-        return personRepositories.findAll();
-    }
-
-    @GetMapping("/person/{id}")
-    public PersonEntity getPersonByID(@PathVariable Long id) {
-        Optional<PersonEntity> optionalPerson = personRepositories.findById(id);
-        if (optionalPerson.isPresent()) {
-            return optionalPerson.get();
-        } else {
-            throw new NotFoundException("Student not found with id " + id);
+    @RequestMapping(value = "/person", method = RequestMethod.POST)
+    public ResponseEntity personDTO(@RequestBody String json) throws ParseException {
+        Gson gson = new GsonBuilder().setDateFormat("dd.MM.yyyy").create();
+        PersonDTO personDTO = new PersonDTO();
+        if (json != null) {
+            int i = json.length();
+            char[] characters = new char[10];
+            json.getChars(i - 12, i - 2, characters, 0);
+            String wtf = String.valueOf(characters);
+            SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+            df.setLenient(false);
         }
+            personDTO = gson.fromJson(json, PersonDTO.class);
+
+        serviceEntity.personSave(personDTO.getId(), personDTO.getName(), personDTO.getBirthdate());
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PostMapping("/person")
-    public PersonEntity createPerson(@Valid @RequestBody PersonEntity personEntity) {
-        return personRepositories.save(personEntity);
+    @RequestMapping(value = "/clear")
+    public ResponseEntity clearAll() {
+        serviceEntity.clearAll();
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/clear")
-    public void deletePerson() {
-      personRepositories.deleteAll();
-    }
+    @RequestMapping(value = "/personwithcars", method = RequestMethod.GET)
+    public @ResponseBody
+    Object json(@RequestParam final Long personid) {
+        PersonDTO personDTO = serviceEntity.retunrPerson(personid);
 
+        if (personDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+        List list = serviceEntity.carsPerson(personid);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        PersonWithCars personWithCars = new PersonWithCars();
+        personWithCars.setId(personDTO.getId());
+        personWithCars.setBirthdate(dateFormat.format(personDTO.getBirthdate()));
+        personWithCars.setName(personDTO.getName());
+        personWithCars.setCars(list);
+        return personWithCars;
+    }
+    @RequestMapping(value = "/statistics", method = RequestMethod.GET)
+    public @ResponseBody
+    Object json() {
+        Statistics statistics = serviceEntity.returnStatistics();
+        return statistics;
+    }
 }

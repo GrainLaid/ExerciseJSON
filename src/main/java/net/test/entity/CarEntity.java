@@ -1,25 +1,20 @@
 package net.test.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "CAR")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CarEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID_CAR")
-    private Long id;
-
-    @Column(name = "CAR_MODEL", nullable = false)
+    @Column(name = "ID_CAR", nullable = false, unique = true)
     @NotNull
-    private String model;
+    private Long id;
 
     @Column(name = "HORSEPOWER", nullable = false)
     @NotNull
@@ -28,20 +23,28 @@ public class CarEntity {
 
     @Column(name = "OWNERID", nullable = false)
     @NotNull
-    private Long ownerid;
+    private Long ownerId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "Person_Car", nullable = false)
-    @JsonIgnore
-    private PersonEntity personEntity;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ModelEntity> modelEntity = new ArrayList<>();
+
+    public List<ModelEntity> getModelEntity() {
+        return modelEntity;
+    }
+
+    public void setModelEntity(List<ModelEntity> modelEntity) {
+        this.modelEntity = modelEntity;
+    }
+
 
     public CarEntity() {
     }
 
-    public CarEntity(String model, Integer horsepower, Long ownerid) {
-        this.model = model;
+    public CarEntity(@NotNull Long id, List modelEntity, @NotNull @Min(1) Integer horsepower, @NotNull Long ownerId) {
+        this.id = id;
+        this.modelEntity = modelEntity;
         this.horsepower = horsepower;
-        this.ownerid = ownerid;
+        this.ownerId = ownerId;
     }
 
     public Long getId() {
@@ -52,14 +55,6 @@ public class CarEntity {
         this.id = id;
     }
 
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
     public Integer getHorsepower() {
         return horsepower;
     }
@@ -68,20 +63,13 @@ public class CarEntity {
         this.horsepower = horsepower;
     }
 
-    public Long getOwnerid() {
-        return ownerid;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwnerid(Long ownerid) {
-        this.ownerid = ownerid;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public PersonEntity getPersonEntity() {
-        return personEntity;
-    }
-
-    public void setPersonEntity(PersonEntity personEntity) {
-        this.personEntity = personEntity;
-    }
 }
 

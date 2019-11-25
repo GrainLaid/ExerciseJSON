@@ -1,47 +1,43 @@
 package net.test.controllers;
 
-import net.test.entity.CarEntity;
-import net.test.exception.NotFoundException;
-import net.test.repositories.CarRepositories;
-import net.test.repositories.PersonRepositories;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import net.test.DTO.CarDTO;
+import net.test.DTO.PersonDTO;
 
+import net.test.service.ServiceEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.List;
+import java.util.GregorianCalendar;
 
 @RestController
 public class CarController {
-    @Autowired
-    private CarRepositories carRepositories;
 
-
-    private PersonRepositories personRepositories;
+    private ServiceEntity serviceEntity;
 
     @Autowired
-    public void setPersonRepositories(PersonRepositories personRepositories) {
-        this.personRepositories = personRepositories;
+    public void setServiceEntity(ServiceEntity serviceEntity) {
+        this.serviceEntity = serviceEntity;
     }
 
-    @GetMapping("/person/{personId}/car")
-    public List<CarEntity> getContactByPersonId(@PathVariable Long personId) {
-
-        if (!personRepositories.existsById(personId)) {
-            throw new NotFoundException("Person not found!");
+    @RequestMapping(value = "/car", method = RequestMethod.POST)
+    public ResponseEntity carDTO(
+            @RequestBody String json
+    ) {
+        Gson gson = new GsonBuilder().setDateFormat("dd.MM.yyyy").create();
+        CarDTO carDTO = new CarDTO();
+        carDTO = gson.fromJson(json, CarDTO.class);
+        PersonDTO personDTO = new PersonDTO();
+        GregorianCalendar thisCalendar = new GregorianCalendar();
+        GregorianCalendar birthdatePerson = new GregorianCalendar();
+        birthdatePerson.setTime(personDTO.getBirthdate());
+        Long milisecond = thisCalendar.getTimeInMillis() - birthdatePerson.getTimeInMillis();
+        if (milisecond < 567648000000L) {
+            return ResponseEntity.badRequest().build();
         }
-
-        return carRepositories.findByPersonEntityId(personId);
+        serviceEntity.carSave(carDTO.getId(), carDTO.getModel(), carDTO.getHorsepower(), carDTO.getOwnerId());
+        return ResponseEntity.ok().build();
     }
-
-    @PostMapping("/car/{personId}")
-    public CarEntity addCar(@PathVariable Long personId,
-                            @Valid @RequestBody CarEntity carEntity) {
-        return personRepositories.findById(personId)
-                .map(personEntity -> {
-                    carEntity.setPersonEntity(personEntity);
-                    return carRepositories.save(carEntity);
-                }).orElseThrow(() -> new NotFoundException("Person not found!"));
-    }
-
 }
