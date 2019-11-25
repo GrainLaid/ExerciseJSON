@@ -32,22 +32,45 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/person", method = RequestMethod.POST)
-    public ResponseEntity personDTO(@RequestBody String json) throws ParseException {
+    public ResponseEntity personDTO(@RequestBody String json) {
+
         Gson gson = new GsonBuilder().setDateFormat("dd.MM.yyyy").create();
+
         PersonDTO personDTO = new PersonDTO();
         if (json != null) {
             int i = json.length();
             char[] characters = new char[10];
             json.getChars(i - 12, i - 2, characters, 0);
             String wtf = String.valueOf(characters);
+
             SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
             df.setLenient(false);
+            try {
+                Date date = df.parse(wtf);
+                System.out.println(date);
+            } catch (ParseException e) {
+                return ResponseEntity.badRequest().build();
+            }
+
+            if (json.charAt(i - 7) != '.' || json.charAt(i - 10) != '.') {
+                return ResponseEntity.badRequest().build();
+            }
+            try {
+                personDTO = gson.fromJson(json, PersonDTO.class);
+            } catch (JsonSyntaxException e) {
+                return ResponseEntity.badRequest().build();
+            }
+            Date date = new Date();
+            if (!(personDTO.getBirthdate().before(date)))
+            {
+                return ResponseEntity.badRequest().build();
+            }
         }
-            personDTO = gson.fromJson(json, PersonDTO.class);
 
         serviceEntity.personSave(personDTO.getId(), personDTO.getName(), personDTO.getBirthdate());
         return ResponseEntity.ok(HttpStatus.OK);
     }
+
 
     @RequestMapping(value = "/clear")
     public ResponseEntity clearAll() {
@@ -72,6 +95,7 @@ public class PersonController {
         personWithCars.setCars(list);
         return personWithCars;
     }
+
     @RequestMapping(value = "/statistics", method = RequestMethod.GET)
     public @ResponseBody
     Object json() {

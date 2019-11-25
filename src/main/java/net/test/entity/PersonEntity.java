@@ -31,7 +31,7 @@ public class PersonEntity {
     public PersonEntity() {
     }
 
-    public PersonEntity(@NotNull Long id, @NotNull @Size(min = 2, max = 30, message = "Именя не может быть меньше 2х знаков и не более 30") String name, Date birthday) {
+    public PersonEntity(@NotNull Long id, @NotNull @Size(min = 2, max = 30, message = "Именя не может быть меньше 2х знаков и не более 30") String name, @NotNull @Past Date birthday) {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
