@@ -31,9 +31,9 @@ public class CarController {
         carDTO = gson.fromJson(json, CarDTO.class);
         PersonDTO personDTO = new PersonDTO();
         GregorianCalendar thisCalendar = new GregorianCalendar();
-        GregorianCalendar birthdayPerson = new GregorianCalendar();
-        birthdayPerson.setTime(personDTO.getBirthday());
-        Long milisecond = thisCalendar.getTimeInMillis() - birthdayPerson.getTimeInMillis();
+        GregorianCalendar birthdatePerson = new GregorianCalendar();
+        birthdatePerson.setTime(personDTO.getBirthdate());
+        Long milisecond = thisCalendar.getTimeInMillis() - birthdatePerson.getTimeInMillis();
         if (milisecond < 567648000000L) {
             return ResponseEntity.badRequest().build();
         }

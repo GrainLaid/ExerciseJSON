@@ -60,13 +60,13 @@ public class PersonController {
             }
 
             Date date = new Date();
-            if (!(personDTO.getBirthday().before(date)))
+            if (!(personDTO.getBirthdate().before(date)))
             {
                 return ResponseEntity.badRequest().build();
             }
         }
 
-        serviceEntity.personSave(personDTO.getId(), personDTO.getName(), personDTO.getBirthday());
+        serviceEntity.personSave(personDTO.getId(), personDTO.getName(), personDTO.getBirthdate());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -89,7 +89,7 @@ public class PersonController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         PersonWithCars personWithCars = new PersonWithCars();
         personWithCars.setId(personDTO.getId());
-        personWithCars.setBirthday(dateFormat.format(personDTO.getBirthday()));
+        personWithCars.setBirthdate(dateFormat.format(personDTO.getBirthdate()));
         personWithCars.setName(personDTO.getName());
         personWithCars.setCars(list);
         return personWithCars;

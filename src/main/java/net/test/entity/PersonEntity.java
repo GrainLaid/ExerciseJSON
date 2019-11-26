@@ -26,15 +26,15 @@ public class PersonEntity {
     @NotNull
     @Past
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd.MM.yyyy")
-    private Date birthday;
+    private Date birthdate;
 
     public PersonEntity() {
     }
 
-    public PersonEntity(@NotNull Long id, @NotNull @Size(min = 2, max = 30, message = "Именя не может быть меньше 2х знаков и не более 30") String name, @NotNull @Past Date birthday) {
+    public PersonEntity(@NotNull Long id, @NotNull @Size(min = 2, max = 30, message = "Именя не может быть меньше 2х знаков и не более 30") String name, @NotNull @Past Date birthdate) {
         this.id = id;
         this.name = name;
-        this.birthday = birthday;
+        this.birthdate = birthdate;
     }
 
     public Long getId() {
@@ -53,12 +53,12 @@ public class PersonEntity {
         this.name = name;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public Date getBirthdate() {
+        return birthdate;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
     }
 
 

@@ -6,7 +6,7 @@ public class PersonDTO {
 
     private long id;
     private String name;
-    private Date birthday;
+    private Date birthdate;
 
     public long getId() {
         return id;
@@ -24,12 +24,12 @@ public class PersonDTO {
         this.name = name;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public Date getBirthdate() {
+        return birthdate;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
     }
 }
 

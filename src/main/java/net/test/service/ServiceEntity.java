@@ -48,8 +48,8 @@ public class ServiceEntity {
         this.vendorRepositories = vendorRepositories;
     }
 //перса добавить
-    public void personSave(Long id, String name, Date birthday) {
-        personRepositories.save(new PersonEntity(id, name, birthday));
+    public void personSave(Long id, String name, Date birthdate) {
+        personRepositories.save(new PersonEntity(id, name, birthdate));
     }
 
     //инфа о car and person
@@ -108,7 +108,7 @@ public class ServiceEntity {
             return null;
         }
         personDTO.setId(personEntity.getId());
-        personDTO.setBirthday(personEntity.getBirthday());
+        personDTO.setBirthdate(personEntity.getBirthdate());
         personDTO.setName(personEntity.getName());
 
         return personDTO;
