@@ -52,6 +52,28 @@ public class ServiceEntity {
         personRepositories.save(new PersonEntity(id, name, birthdate));
     }
 
+
+    public boolean idPersonValidate(Long id) {
+
+        Optional nullTest = personRepositories.findById(id);
+
+        if (nullTest.equals(Optional.empty())) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public boolean idCarValidate(Long id) {
+
+        Optional nullTest = carRepositories.findById(id);
+
+        if (nullTest.equals(Optional.empty())) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     //инфа о car and person
     public List carsPerson(Long idPerson) {
 

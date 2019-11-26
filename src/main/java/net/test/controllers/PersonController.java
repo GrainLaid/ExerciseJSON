@@ -32,7 +32,8 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/person", method = RequestMethod.POST)
-    public ResponseEntity personDTO(@RequestBody String json) {
+    public ResponseEntity personDTO(@RequestBody String json)
+    {
 
         Gson gson = new GsonBuilder().setDateFormat("dd.MM.yyyy").create();
 
@@ -40,7 +41,7 @@ public class PersonController {
         if (json != null) {
             int i = json.length();
             char[] characters = new char[10];
-            json.getChars(i - 12, i- 2 , characters, 0);
+            json.getChars(i - 12, i - 2, characters, 0);
             String wtf = String.valueOf(characters);
             System.out.println(wtf);
 
@@ -52,18 +53,23 @@ public class PersonController {
             } catch (ParseException e) {
                 return ResponseEntity.badRequest().build();
             }
+        }
+        try {
+            personDTO = gson.fromJson(json, PersonDTO.class);
+        } catch (JsonSyntaxException e) {
+            return ResponseEntity.badRequest().build();
+        }
 
-            try {
-                personDTO = gson.fromJson(json, PersonDTO.class);
-            } catch (JsonSyntaxException e) {
-                return ResponseEntity.badRequest().build();
-            }
-
-            Date date = new Date();
-            if (!(personDTO.getBirthdate().before(date)))
-            {
-                return ResponseEntity.badRequest().build();
-            }
+        if (personDTO.getBirthdate() == null || personDTO.getName() == null || personDTO.getId() == 0) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (serviceEntity.idPersonValidate(personDTO.getId()))                //проверка на то, что человек есть
+        {
+            return ResponseEntity.badRequest().build();
+        }
+        Date date = new Date();
+        if (!(personDTO.getBirthdate().before(date))) {
+            return ResponseEntity.badRequest().build();
         }
 
         serviceEntity.personSave(personDTO.getId(), personDTO.getName(), personDTO.getBirthdate());
