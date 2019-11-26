@@ -40,8 +40,9 @@ public class PersonController {
         if (json != null) {
             int i = json.length();
             char[] characters = new char[10];
-            json.getChars(i - 12, i - 2, characters, 0);
+            json.getChars(i - 12, i- 2 , characters, 0);
             String wtf = String.valueOf(characters);
+            System.out.println(wtf);
 
             SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
             df.setLenient(false);
@@ -52,22 +53,20 @@ public class PersonController {
                 return ResponseEntity.badRequest().build();
             }
 
-            if (json.charAt(i - 7) != '.' || json.charAt(i - 10) != '.') {
-                return ResponseEntity.badRequest().build();
-            }
             try {
                 personDTO = gson.fromJson(json, PersonDTO.class);
             } catch (JsonSyntaxException e) {
                 return ResponseEntity.badRequest().build();
             }
+
             Date date = new Date();
-            if (!(personDTO.getBirthdate().before(date)))
+            if (!(personDTO.getBirthday().before(date)))
             {
                 return ResponseEntity.badRequest().build();
             }
         }
 
-        serviceEntity.personSave(personDTO.getId(), personDTO.getName(), personDTO.getBirthdate());
+        serviceEntity.personSave(personDTO.getId(), personDTO.getName(), personDTO.getBirthday());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -90,7 +89,7 @@ public class PersonController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         PersonWithCars personWithCars = new PersonWithCars();
         personWithCars.setId(personDTO.getId());
-        personWithCars.setBirthdate(dateFormat.format(personDTO.getBirthdate()));
+        personWithCars.setBirthday(dateFormat.format(personDTO.getBirthday()));
         personWithCars.setName(personDTO.getName());
         personWithCars.setCars(list);
         return personWithCars;

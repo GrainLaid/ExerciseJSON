@@ -5,7 +5,7 @@ import java.util.List;
 public class PersonWithCars {
     Long id;
     String name;
-    String birthdate;
+    String birthday;
     List Cars;
 
     public Long getId() {
@@ -24,12 +24,12 @@ public class PersonWithCars {
         this.name = name;
     }
 
-    public String getBirthdate() {
-        return birthdate;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setBirthdate(String birthdate) {
-        this.birthdate = birthdate;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public List getCars() {
