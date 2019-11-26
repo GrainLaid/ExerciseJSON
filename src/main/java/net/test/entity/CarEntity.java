@@ -1,6 +1,6 @@
 package net.test.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -9,10 +9,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "CAR")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CarEntity {
     @Id
-    @Column(name = "ID_CAR", nullable = false, unique = true)
+    @Column(name = "ID_CAR", nullable = false)
     @NotNull
     private Long id;
 
@@ -40,7 +39,7 @@ public class CarEntity {
     public CarEntity() {
     }
 
-    public CarEntity(@NotNull Long id, List modelEntity, @NotNull @Min(1) Integer horsepower, @NotNull Long ownerId) {
+    public CarEntity(Long id, List modelEntity, @NotNull @Min(1) Integer horsepower, @NotNull Long ownerId) {
         this.id = id;
         this.modelEntity = modelEntity;
         this.horsepower = horsepower;
