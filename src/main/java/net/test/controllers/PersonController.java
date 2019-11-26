@@ -5,8 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import net.test.DTO.PersonDTO;
-import net.test.DTO.PersonWithCars;
-import net.test.DTO.Statistics;
+
 
 import net.test.service.ServiceEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+
 
 
 @Controller
@@ -63,7 +62,7 @@ public class PersonController {
         if (personDTO.getBirthdate() == null || personDTO.getName() == null || personDTO.getId() == 0) {
             return ResponseEntity.badRequest().build();
         }
-        if (serviceEntity.idPersonValidate(personDTO.getId()))                //проверка на то, что человек есть
+        if (serviceEntity.idPersonValidate(personDTO.getId()))
         {
             return ResponseEntity.badRequest().build();
         }
@@ -83,28 +82,4 @@ public class PersonController {
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "/personwithcars", method = RequestMethod.GET)
-    public @ResponseBody
-    Object json(@RequestParam final Long personid) {
-        PersonDTO personDTO = serviceEntity.retunrPerson(personid);
-
-        if (personDTO == null) {
-            return ResponseEntity.notFound().build();
-        }
-        List list = serviceEntity.carsPerson(personid);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        PersonWithCars personWithCars = new PersonWithCars();
-        personWithCars.setId(personDTO.getId());
-        personWithCars.setBirthdate(dateFormat.format(personDTO.getBirthdate()));
-        personWithCars.setName(personDTO.getName());
-        personWithCars.setCars(list);
-        return personWithCars;
-    }
-
-    @RequestMapping(value = "/statistics", method = RequestMethod.GET)
-    public @ResponseBody
-    Object json() {
-        Statistics statistics = serviceEntity.returnStatistics();
-        return statistics;
-    }
 }

@@ -9,10 +9,10 @@ public class VendorEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "IS_VENDOR", nullable = false, unique = true)
+    @Column(name = "ID_VENDOR", nullable = false, unique = true)
     private long id;
 
-    @Column(name = "VENDOR_NAME", nullable = false)
+    @Column(name = "VENDOR_NANES", nullable = false)
     @NotNull
     private String vendorName;
 
