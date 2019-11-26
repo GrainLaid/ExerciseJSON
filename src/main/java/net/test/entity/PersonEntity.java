@@ -16,7 +16,7 @@ public class PersonEntity {
     @Id
     @Column(name = "ID_PERSON", nullable = false,unique = true)
     @NotNull
-    private Long id;
+    private long id;
 
     @Column(name = "NAME")
     private String name;
@@ -29,17 +29,17 @@ public class PersonEntity {
     public PersonEntity() {
     }
 
-    public PersonEntity(@NotNull Long id,String name, @Past Date birthdate) {
+    public PersonEntity(@NotNull long id,String name, @Past Date birthdate) {
         this.id = id;
         this.name = name;
         this.birthdate = birthdate;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

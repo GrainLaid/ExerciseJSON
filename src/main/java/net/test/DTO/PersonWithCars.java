@@ -3,16 +3,16 @@ package net.test.DTO;
 import java.util.List;
 
 public class PersonWithCars {
-    Long id;
+    long id;
     String name;
     String birthdate;
     List Cars;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

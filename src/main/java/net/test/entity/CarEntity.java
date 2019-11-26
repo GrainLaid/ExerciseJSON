@@ -11,9 +11,8 @@ import java.util.List;
 @Table(name = "CAR")
 public class CarEntity {
     @Id
-    @Column(name = "ID_CAR", nullable = false)
-    @NotNull
-    private Long id;
+    @Column(name = "ID_CAR")
+    private long id;
 
     @Column(name = "HORSEPOWER", nullable = false)
     @NotNull
@@ -22,7 +21,7 @@ public class CarEntity {
 
     @Column(name = "OWNERID", nullable = false)
     @NotNull
-    private Long ownerId;
+    private long ownerId;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<ModelEntity> modelEntity = new ArrayList<>();
@@ -39,18 +38,18 @@ public class CarEntity {
     public CarEntity() {
     }
 
-    public CarEntity(Long id, List modelEntity, @NotNull @Min(1) Integer horsepower, @NotNull Long ownerId) {
+    public CarEntity(long id, List modelEntity, @NotNull @Min(1) Integer horsepower, @NotNull long ownerId) {
         this.id = id;
         this.modelEntity = modelEntity;
         this.horsepower = horsepower;
         this.ownerId = ownerId;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -62,11 +61,11 @@ public class CarEntity {
         this.horsepower = horsepower;
     }
 
-    public Long getOwnerId() {
+    public long getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(Long ownerId) {
+    public void setOwnerId(long ownerId) {
         this.ownerId = ownerId;
     }
 
