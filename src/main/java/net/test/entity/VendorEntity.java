@@ -4,16 +4,15 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "VENDOR")
+@Table(name ="VENDOR")
 public class VendorEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID_VENDOR", nullable = false, unique = true)
+    @GeneratedValue
+    @Column(name = "id")
     private long id;
 
-    @Column(name = "VENDOR_NANES", nullable = false)
-    @NotNull
+    @Column(name = "vendorName")
     private String vendorName;
 
     @ManyToOne
