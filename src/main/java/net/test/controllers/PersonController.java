@@ -60,11 +60,12 @@ public class PersonController {
         if (personDTO.getBirthdate() == null || personDTO.getName() == null || personDTO.getId() == 0) {
             return ResponseEntity.badRequest().build();
         }
+
         if (serviceEntity.idPersonValidate(personDTO.getId())) {
             return ResponseEntity.badRequest().build();
         }
-        Date date = new Date();
-        if (!(personDTO.getBirthdate().before(date))) {
+
+        if (!(personDTO.getBirthdate().before(new Date()))) {
             return ResponseEntity.badRequest().build();
         }
 

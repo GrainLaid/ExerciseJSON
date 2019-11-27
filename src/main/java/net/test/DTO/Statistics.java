@@ -2,32 +2,32 @@ package net.test.DTO;
 
 public class Statistics {
 
-    Long personStat;
-    Long carStat;
-    Long uniquevendorStat;
+    long personcount;
+    long carcount;
+    long uniquevendorcount;
 
-    public Long getPersonStat() {
-        return personStat;
+    public long getPersoncount() {
+        return personcount;
     }
 
-    public void setPersonStat(Long personStat) {
-        this.personStat = personStat;
+    public void setPersoncount(long personcount) {
+        this.personcount = personcount;
     }
 
-    public Long getCarStat() {
-        return carStat;
+    public long getCarcount() {
+        return carcount;
     }
 
-    public void setCarStat(Long carStat) {
-        this.carStat = carStat;
+    public void setCarcount(long carcount) {
+        this.carcount = carcount;
     }
 
-    public Long getUniquevendorStat() {
-        return uniquevendorStat;
+    public long getUniquevendorcount() {
+        return uniquevendorcount;
     }
 
-    public void setUniquevendorStat(Long uniquevendorStat) {
-        this.uniquevendorStat = uniquevendorStat;
+    public void setUniquevendorcount(long uniquevendorcount) {
+        this.uniquevendorcount = uniquevendorcount;
     }
 }
 

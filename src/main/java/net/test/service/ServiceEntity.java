@@ -47,7 +47,8 @@ public class ServiceEntity {
     public void setVendorRepositories(VendorRepositories vendorRepositories) {
         this.vendorRepositories = vendorRepositories;
     }
-//перса добавить
+
+    //перса добавить
     public void personSave(Long id, String name, Date birthdate) {
         personRepositories.save(new PersonEntity(id, name, birthdate));
     }
@@ -63,6 +64,7 @@ public class ServiceEntity {
             return true;
         }
     }
+
     public boolean idCarValidate(Long id) {
 
         Optional nullTest = carRepositories.findById(id);
@@ -74,16 +76,13 @@ public class ServiceEntity {
         }
     }
 
-    //инфа о car and person
+    //инфа о car
     public List carsPerson(Long idPerson) {
 
         CarEntity carEntity = new CarEntity();
         carEntity.setOwnerId(idPerson);
 
-        ExampleMatcher matcher = ExampleMatcher.matching()
-                .withIgnorePaths("id")
-                .withIgnorePaths("model")
-                .withIgnorePaths("horsepower");
+        ExampleMatcher matcher = ExampleMatcher.matching().withIgnorePaths("id").withIgnorePaths("model").withIgnorePaths("horsepower");
 
         Example<CarEntity> example = Example.of(carEntity, matcher);
         List<CarDTO> carList = new ArrayList<>();
@@ -120,7 +119,7 @@ public class ServiceEntity {
         carRepositories.save(new CarEntity(id, modelList, horsepower, ownerId));
     }
 
-    //извлечение
+    //извлечение person
     public PersonDTO retunrPerson(Long id) {
         PersonDTO personDTO = new PersonDTO();
         PersonEntity personEntity;
@@ -131,7 +130,7 @@ public class ServiceEntity {
         }
         personDTO.setId(personEntity.getId());
         personDTO.setBirthdate(personEntity.getBirthdate());
-        personDTO.setName(personEntity.getName());
+        personDTO.setName(personEntity.getName() == null ? "" : personEntity.getName());
 
         return personDTO;
     }
@@ -139,9 +138,9 @@ public class ServiceEntity {
     //стат
     public Statistics returnStatistics() {
         Statistics statistics = new Statistics();
-        statistics.setPersonStat(personRepositories.count());
-        statistics.setCarStat(carRepositories.count());
-        statistics.setUniquevendorStat(vendorRepositories.countDistinctVendorNameBy());
+        statistics.setPersoncount(personRepositories.count());
+        statistics.setCarcount(carRepositories.count());
+        statistics.setUniquevendorcount(vendorRepositories.countDistinctVendorNameBy());
         return statistics;
     }
 

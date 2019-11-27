@@ -29,6 +29,7 @@ public class StatisticController {
         if (personDTO == null) {
             return ResponseEntity.notFound().build();
         }
+
         List list = serviceEntity.carsPerson(personid);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         PersonWithCars personWithCars = new PersonWithCars();
