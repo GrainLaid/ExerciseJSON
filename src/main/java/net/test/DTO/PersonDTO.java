@@ -1,6 +1,7 @@
 package net.test.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.OptBoolean;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
@@ -16,7 +17,7 @@ public class PersonDTO {
     @NotNull
     @Past
     @DateTimeFormat(pattern = "dd.MM.yyyy")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy", lenient = OptBoolean.FALSE)
     private Date birthdate;
 
     public long getId() {
