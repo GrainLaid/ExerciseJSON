@@ -1,8 +1,5 @@
 package net.test.controllers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
 import net.test.DTO.CarDTO;
 import net.test.DTO.PersonDTO;
 
@@ -24,14 +21,8 @@ public class CarController {
     }
 
     @RequestMapping(value = "/car", method = RequestMethod.POST)
-    public ResponseEntity carDTO(@RequestBody String json) {
-        Gson gson = new GsonBuilder().setDateFormat("dd.MM.yyyy").create();
-        CarDTO carDTO = new CarDTO();
-        try {
-            carDTO = gson.fromJson(json, CarDTO.class);
-        } catch (JsonSyntaxException e) {
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity carDTO(@RequestBody CarDTO carDTO) {
+
         if (carDTO.getModel() == null) {
             return ResponseEntity.badRequest().build();
         }

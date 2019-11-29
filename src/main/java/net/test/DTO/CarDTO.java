@@ -1,10 +1,17 @@
 package net.test.DTO;
 
-public class CarDTO {
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
+public class CarDTO {
+    @NotNull
     private long id;
+    @NotNull
     private String model;
+    @NotNull
+    @Min(1)
     private Integer horsepower;
+    @NotNull
     private long ownerId;
 
     public long getId() {

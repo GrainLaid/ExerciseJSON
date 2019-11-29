@@ -1,11 +1,22 @@
 package net.test.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 public class PersonDTO {
-
+    @NotNull
     private long id;
+    @NotNull
     private String name;
+    @NotNull
+    @Past
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private Date birthdate;
 
     public long getId() {
