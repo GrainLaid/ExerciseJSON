@@ -6,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 public class PersonDTO {
@@ -29,7 +28,7 @@ public class PersonDTO {
     }
 
     public String getName() {
-        return name ;
+        return name;
     }
 
     public void setName(String name) {
@@ -42,6 +41,10 @@ public class PersonDTO {
 
     public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
+    }
+
+    public boolean personVald() {
+        return (this.getBirthdate() == null || this.getName() == null || this.getId() == 0);
     }
 }
 

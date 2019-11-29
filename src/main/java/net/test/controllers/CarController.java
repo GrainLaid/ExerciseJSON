@@ -22,15 +22,7 @@ public class CarController {
 
     @RequestMapping(value = "/car", method = RequestMethod.POST)
     public ResponseEntity carDTO(@RequestBody CarDTO carDTO) {
-
-        if (carDTO.getModel() == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        if (carDTO.getHorsepower() == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        if (carDTO.getModel().equals("") || carDTO.getId() == 0 || carDTO.getHorsepower() == 0 || carDTO.getOwnerId() == 0) {
+        if (carDTO.carVald()) {
             return ResponseEntity.badRequest().build();
         }
         PersonDTO personDTO = serviceEntity.retunrPerson(carDTO.getOwnerId());
@@ -40,13 +32,6 @@ public class CarController {
         if (serviceEntity.idCarValidate(carDTO.getId())) {
             return ResponseEntity.badRequest().build();
         }
-        if (carDTO.getModel().charAt(0) == '-') {
-            return ResponseEntity.badRequest().build();
-        }
-        if (!(carDTO.getHorsepower() > 0)) {
-            return ResponseEntity.badRequest().build();
-        }
-
         GregorianCalendar thisCalendar = new GregorianCalendar();
         GregorianCalendar birthdatePerson = new GregorianCalendar();
         birthdatePerson.setTime(personDTO.getBirthdate());

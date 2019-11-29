@@ -45,5 +45,18 @@ public class CarDTO {
     public void setOwnerId(long ownerId) {
         this.ownerId = ownerId;
     }
+
+    public boolean carVald() {
+        return (this.getModel() == null ||
+                this.getHorsepower() == null ||
+                this.getModel().equals("") ||
+                this.getId() == 0 ||
+                this.getHorsepower() == 0 ||
+                this.getOwnerId() == 0 ||
+                this.getModel().charAt(0) == '-' ||
+                (!(this.getHorsepower() > 0)));
+    }
+
+
 }
 

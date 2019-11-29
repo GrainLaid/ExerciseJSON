@@ -1,10 +1,14 @@
 package net.test.DTO;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class PersonWithCars {
+    @NotNull
     long id;
+    @NotNull
     String name;
+    @NotNull
     String birthdate;
     List Cars;
 

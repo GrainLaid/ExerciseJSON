@@ -1,6 +1,5 @@
 package net.test.entity;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

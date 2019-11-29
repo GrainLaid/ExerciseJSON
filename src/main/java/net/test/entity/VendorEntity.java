@@ -1,10 +1,9 @@
 package net.test.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name ="VENDOR")
+@Table(name = "VENDOR")
 public class VendorEntity {
 
     @Id

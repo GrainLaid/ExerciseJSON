@@ -1,20 +1,15 @@
 package net.test.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
 @Table(name = "PERSON")
 public class PersonEntity {
     @Id
-    @Column(name = "ID_PERSON", nullable = false,unique = true)
+    @Column(name = "ID_PERSON", nullable = false, unique = true)
     @NotNull
     private long id;
 
@@ -29,7 +24,7 @@ public class PersonEntity {
     public PersonEntity() {
     }
 
-    public PersonEntity(@NotNull long id,String name, @Past Date birthdate) {
+    public PersonEntity(@NotNull long id, String name, @Past Date birthdate) {
         this.id = id;
         this.name = name;
         this.birthdate = birthdate;
